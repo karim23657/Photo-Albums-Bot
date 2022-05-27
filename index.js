@@ -26,7 +26,13 @@ bot.on('photo', (ctx) => {
     done(ctx)
   }
 })
-
+bot.on('video', (ctx) => {
+  photos[ctx.from.id] = photos[ctx.from.id] || []
+  photos[ctx.from.id].push({type: 'video', media: ctx.message.video.file_id})
+  if (photos[ctx.from.id].length >= 10) {
+    done(ctx)
+  }
+})
 function done(ctx) {
   ctx.replyWithMediaGroup(photos[ctx.from.id])
   photos[ctx.from.id] = []
